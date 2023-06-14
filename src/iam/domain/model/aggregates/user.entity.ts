@@ -1,6 +1,7 @@
 import { AggregateRoot } from "@nestjs/cqrs";
 import { Entity } from "typeorm";
 import { EmailAddress } from "../value-objects/email-addres.value-object";
+import { UserCreatedEvent } from "../events/user-created.event";
 
 @Entity(users)
 class User extends AggregateRoot{
@@ -15,3 +16,6 @@ class User extends AggregateRoot{
 
 }
 
+onCreation() :void {
+   this.apply(new UserCreatedEvent(this.id));
+}
